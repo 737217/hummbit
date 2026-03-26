@@ -57,6 +57,7 @@
     "dev": "TSUP_SOURCEMAP=true tsup --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "size:check": "node ./scripts/check-pack-size.mjs",
-    "pub": "yarn build:release && yarn size:check && npm version patch && npm publish --access public"
+    "pre-pub": "yarn build:release && yarn size:check && npm version patch",
+    "pub": "npm publish --access public"
   }
 }
