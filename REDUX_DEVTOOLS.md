@@ -20,6 +20,13 @@ If your runtime doesn’t expose `process.env.NODE_ENV`, use an explicit overrid
 
 ## 3) Per-store configuration (`initStore`)
 
+### Action payloads
+
+`hummbit` sends **action arguments** to Redux DevTools as `payload`:
+
+- if an action is called with **one argument**, `payload` is that argument
+- if an action is called with **multiple arguments**, `payload` is an array of arguments
+
 ### Disable
 
 ```ts
@@ -73,6 +80,38 @@ const store = initStore({
 });
 ```
 
+### Hide internal `setState` / `mergeState` entries
+
+If you prefer seeing only your domain actions (e.g. `addToCart`) in the DevTools timeline,
+you can hide internal update entries:
+
+```ts
+import { initStore } from "hummbit";
+
+const store = initStore(
+  {
+    initialState: {
+      /* ... */
+    },
+    devtools: true,
+    actions: ({ actionCreator, setState }) => ({
+      addToCart: actionCreator("addToCart", (payload: { productId: string }) =>
+        setState((s) => s),
+      ),
+    }),
+    selectors: {
+      /* ... */
+    },
+  },
+  {
+    devtools: {
+      hideSetState: true,
+      hideMergeState: true,
+    },
+  },
+);
+```
+
 ## 4) Global singleton configuration (`hummbit` / `hummbit/react`)
 
 If you’re using the global singleton API (`getState` / `setState` / `mergeState` / `useSelector`),
@@ -85,6 +124,7 @@ configureGlobalStore({
   devtools: false, // disable
   // devtools: true, // force enable
   // devtools: { name: "hummbit(global)" }, // custom name
+  // devtoolsEvents: { hideSetState: true, hideMergeState: true },
 });
 ```
 

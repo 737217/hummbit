@@ -12,6 +12,7 @@ export { initStore } from "./initStoreReact";
 export type { InitializedReactStore } from "./initStoreReact";
 export type {
   InitStoreConfig,
+  InitStoreOptions,
   InitializedStore,
   Selector,
   StoreApi,

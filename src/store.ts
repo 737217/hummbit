@@ -152,6 +152,18 @@ export function __replaceState(
 
 type GlobalStoreConfig = {
   devtools?: DevtoolsConfig;
+  devtoolsEvents?: {
+    /**
+     * If true, `setState` updates won't appear as separate entries in Redux DevTools.
+     * This only affects DevTools logging; it does not change store behavior.
+     */
+    hideSetState?: boolean;
+    /**
+     * If true, `mergeState` updates won't appear as separate entries in Redux DevTools.
+     * This only affects DevTools logging; it does not change store behavior.
+     */
+    hideMergeState?: boolean;
+  };
   middleware?: Middleware<RootState>[];
 };
 
@@ -188,6 +200,13 @@ function ensureGlobalWired() {
     event: Omit<DevtoolsEvent<RootState>, "state">,
   ) => {
     if (!devtools || !recording || isTimeTraveling) return;
+    if (event.type === "setState" && globalConfig.devtoolsEvents?.hideSetState)
+      return;
+    if (
+      event.type === "mergeState" &&
+      globalConfig.devtoolsEvents?.hideMergeState
+    )
+      return;
     let fullEvent: DevtoolsEvent<RootState> = {
       ...event,
       state: defaultStore.getState(),
