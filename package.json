@@ -1,6 +1,6 @@
 {
   "name": "hummbit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Global immutable state manager with selectors and React hook (no provider).",
   "keywords": [
     "state",
