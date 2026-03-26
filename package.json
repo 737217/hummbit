@@ -1,0 +1,60 @@
+{
+  "name": "hummbit",
+  "version": "1.0.1",
+  "description": "Global immutable state manager with selectors and React hook (no provider).",
+  "keywords": [
+    "state",
+    "management",
+    "store",
+    "react",
+    "typescript",
+    "immutable",
+    "redux",
+    "zustand"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./react": {
+      "import": {
+        "types": "./dist/react.d.ts",
+        "default": "./dist/react.js"
+      },
+      "require": {
+        "types": "./dist/react.d.cts",
+        "default": "./dist/react.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.14",
+    "tsup": "8.5.1",
+    "typescript": "6.0.2"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "pub": "yarn build && npm version patch && npm publish --access public"
+  }
+}
