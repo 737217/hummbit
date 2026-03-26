@@ -22,6 +22,11 @@ export type ActionCreator = <Fn extends (...args: any[]) => any>(
 export type InitStoreOptions = {
   devtools?: {
     /**
+     * Optional store name shown in Redux DevTools.
+     * If provided, it overrides `config.devtools.name`.
+     */
+    name?: string;
+    /**
      * If true, `setState` updates won't appear as separate entries in Redux DevTools.
      * This only affects DevTools logging; it does not change store behavior.
      */
@@ -104,8 +109,9 @@ export function initStore<
   };
 
   const dt = resolveDevtoolsOptions(config.devtools);
+  const devtoolsName = options?.devtools?.name ?? dt.name;
   const devtools = dt.enabled
-    ? createDevtoolsAdapter<S>({ name: dt.name ?? "hummbit" })
+    ? createDevtoolsAdapter<S>({ name: devtoolsName ?? "hummbit" })
     : null;
   let recording = true;
   let lastCommittedState: Readonly<S> = store.getState();

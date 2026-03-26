@@ -237,7 +237,11 @@ initStore(
   },
   {
     // optional extra DevTools settings:
-    // devtools: { hideSetState: true, hideMergeState: true },
+    // devtools: {
+    //   name: "MyStoreFromOptions", // overrides config.devtools.name
+    //   hideSetState: true,
+    //   hideMergeState: true,
+    // },
   },
 );
 ```
