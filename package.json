@@ -1,6 +1,6 @@
 {
   "name": "hummbit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Global immutable state manager with selectors and React hook (no provider).",
   "keywords": [
     "state",
@@ -53,8 +53,10 @@
   },
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch",
+    "build:release": "tsup --clean",
+    "dev": "TSUP_SOURCEMAP=true tsup --watch",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "pub": "yarn build && npm version patch && npm publish --access public"
+    "size:check": "node ./scripts/check-pack-size.mjs",
+    "pub": "yarn build:release && yarn size:check && npm version patch && npm publish --access public"
   }
 }

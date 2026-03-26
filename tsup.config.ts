@@ -1,5 +1,11 @@
 import { defineConfig } from "tsup";
 
+declare const process:
+  | {
+      env?: Record<string, string | undefined>;
+    }
+  | undefined;
+
 export default defineConfig({
   entry: {
     index: "src/index.ts",
@@ -7,7 +13,7 @@ export default defineConfig({
   },
   format: ["esm", "cjs"],
   dts: true,
-  sourcemap: true,
+  sourcemap: process?.env?.TSUP_SOURCEMAP === "true",
   clean: true,
   target: "es2019",
   splitting: false,
