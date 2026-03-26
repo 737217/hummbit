@@ -10,6 +10,27 @@ yarn add hummbit
 
 Peer dependency: **React ≥ 18** (only if you use `hummbit/react`).
 
+## Package size (release)
+
+Release builds are configured to **not include sourcemaps**, so they don't inflate the published npm package size.
+
+```sh
+yarn build:release
+npm pack --dry-run
+```
+
+To prevent regressions, run:
+
+```sh
+yarn size:check
+```
+
+You can override the limit (bytes) with `MAX_UNPACKED_BYTES`, e.g.:
+
+```sh
+MAX_UNPACKED_BYTES=90000 yarn size:check
+```
+
 ---
 
 ## Store API (`initStore`)
