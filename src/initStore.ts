@@ -19,6 +19,21 @@ export type ActionCreator = <Fn extends (...args: any[]) => any>(
   fn: Fn,
 ) => Fn;
 
+export type InitStoreOptions = {
+  devtools?: {
+    /**
+     * If true, `setState` updates won't appear as separate entries in Redux DevTools.
+     * This only affects DevTools logging; it does not change store behavior.
+     */
+    hideSetState?: boolean;
+    /**
+     * If true, `mergeState` updates won't appear as separate entries in Redux DevTools.
+     * This only affects DevTools logging; it does not change store behavior.
+     */
+    hideMergeState?: boolean;
+  };
+};
+
 export type StoreApi<S extends object> = {
   getState(): Readonly<S>;
   /**
@@ -65,7 +80,23 @@ export function initStore<
   S extends object,
   A extends Record<string, (...args: any[]) => any>,
   Sel extends Record<string, Selector<S, any>>,
->(config: InitStoreConfig<S, A, Sel>): InitializedStore<S, A, Sel> {
+>(config: InitStoreConfig<S, A, Sel>): InitializedStore<S, A, Sel>;
+export function initStore<
+  S extends object,
+  A extends Record<string, (...args: any[]) => any>,
+  Sel extends Record<string, Selector<S, any>>,
+>(
+  config: InitStoreConfig<S, A, Sel>,
+  options?: InitStoreOptions,
+): InitializedStore<S, A, Sel>;
+export function initStore<
+  S extends object,
+  A extends Record<string, (...args: any[]) => any>,
+  Sel extends Record<string, Selector<S, any>>,
+>(
+  config: InitStoreConfig<S, A, Sel>,
+  options?: InitStoreOptions,
+): InitializedStore<S, A, Sel> {
   const store = createStore<S>(config.initialState, {
     freeze: config.freeze,
   }) as Store<S> & {
@@ -84,6 +115,10 @@ export function initStore<
   const middlewareHooks: MiddlewareHooks<S>[] = [];
   const dispatchDevtoolsRaw = (event: Omit<DevtoolsEvent<S>, "state">) => {
     if (!devtools || !recording || isTimeTraveling) return;
+
+    if (event.type === "setState" && options?.devtools?.hideSetState) return;
+    if (event.type === "mergeState" && options?.devtools?.hideMergeState)
+      return;
 
     let fullEvent: DevtoolsEvent<S> = { ...event, state: store.getState() };
     for (const h of middlewareHooks) {
@@ -184,7 +219,8 @@ export function initStore<
     const wrapped = async (...args: any[]) => {
       const prevState = store.getState();
       const res = await actionFn(...args);
-      dispatchDevtoolsRaw({ type: "action", name });
+      const payload = args.length === 1 ? args[0] : args;
+      dispatchDevtoolsRaw({ type: "action", name, payload });
       runAfterUpdate({
         type: "action",
         name,

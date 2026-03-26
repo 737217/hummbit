@@ -4,6 +4,7 @@ export { initStore } from "./initStore";
 export type {
   InitStoreConfig,
   InitializedStore,
+  InitStoreOptions,
   Selector,
   StoreApi,
 } from "./initStore";

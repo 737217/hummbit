@@ -226,14 +226,20 @@ If the Redux DevTools extension is installed, `hummbit` connects automatically *
 ### Per-store override (`initStore`)
 
 ```ts
-initStore({
-  initialState: { /* ... */ },
-  devtools: false, // disable
-  // devtools: true, // force enable
-  // devtools: { name: "MyStore" }, // custom name
-  actions: (...) => ({ /* ... */ }),
-  selectors: { /* ... */ },
-});
+initStore(
+  {
+    initialState: { /* ... */ },
+    devtools: false, // disable
+    // devtools: true, // force enable
+    // devtools: { name: "MyStore" }, // custom name
+    actions: (...) => ({ /* ... */ }),
+    selectors: { /* ... */ },
+  },
+  {
+    // optional extra DevTools settings:
+    // devtools: { hideSetState: true, hideMergeState: true },
+  },
+);
 ```
 
 ### Global singleton override
@@ -244,6 +250,7 @@ import { configureGlobalStore } from "hummbit";
 configureGlobalStore({
   devtools: false,
   // devtools: { enabled: true, name: "hummbit(global)" },
+  // devtoolsEvents: { hideSetState: true, hideMergeState: true },
 });
 ```
 
