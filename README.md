@@ -2,6 +2,8 @@
 
 # hummbit
 
+[Documentation site](https://www.hummbit.dev/en/about-hummbit)
+
 Immutable state with **typed `initStore`**: you declare `initialState`, **actions** (updates), and **selectors** (reads). Optional React hook bound to that store — **no Provider**.
 
 ## Install
