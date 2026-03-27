@@ -12,6 +12,15 @@
     "redux",
     "zustand"
   ],
+  "author": {
+    "name": "Alexey Tolkachev",
+    "url": "https://www.linkedin.com/in/alexey-tolkachev-742a2a181/"
+  },
+  "homepage": "https://github.com/737217/hummbit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/737217/hummbit"
+  },
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",
