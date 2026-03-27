@@ -1,3 +1,5 @@
+<img src="https://737217-hummbit-doc.vercel.app/hummbit.jpg" alt="Hummbit" style="max-width: 100%; height: auto;" />
+
 # hummbit
 
 Immutable state with **typed `initStore`**: you declare `initialState`, **actions** (updates), and **selectors** (reads). Optional React hook bound to that store — **no Provider**.
